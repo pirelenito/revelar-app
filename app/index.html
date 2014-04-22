@@ -1,10 +1,36 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html> -->
 <html>
   <head>
-    <title>Hello World!</title>
+    <script src="node_modules/jquery/dist/jquery.js"></script>
+    <title>Revelar</title>
   </head>
   <body>
-    <h1>Hello!</h1>
-    We are using node.js <script>document.write(process.version)</script>.
+    <h1>Revelar App</h1>
+
+    <input id="choose-slides" type="file" webkitdirectory/>
+    <p class="path"></p>
+    <button class="open-browser">Open presentation</button>
+
+    <script>
+      var revelar = require('revelar'),
+          gui = require('nw.gui');
+
+      revelar.listen(8000);
+
+      $(function () {
+        $('.open-browser').on('click', function () {
+          gui.Shell.openExternal('http://localhost:8000');
+        });
+
+        $('#choose-slides').on('change', function () {
+          var directory = this.value;
+          $('.path').html(directory);
+
+          revelar.set('slidesPath', directory);
+        });
+      });
+
+    </script>
+
   </body>
 </html>

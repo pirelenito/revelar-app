@@ -1,13 +1,21 @@
 {
-  "name": "nw-demo",
+  "name": "revelar-app",
   "main": "index.html",
+  "dependencies": {
+    "jquery": "^2.1.0",
+    "revelar": "^0.3.3"
+  },
   "window": {
-    "title": "node-webkit demo",
+    "title": "Revelar",
     "icon": "link.png",
-    "toolbar": true,
+    "toolbar": false,
     "frame": true,
-    "width": 800,
-    "height": 600,
-    "position": "mouse"
+    "width": 400,
+    "height": 400,
+    "position": "mouse",
+    "min_width": 400,
+    "min_height": 400,
+    "max_width": 400,
+    "max_height": 400
   }
 }
