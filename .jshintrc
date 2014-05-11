@@ -1,0 +1,8 @@
+{
+  "undef": true,
+  "unused": true,
+  "indent": 2,
+  "noempty": true,
+  "node": true,
+  "browser": true
+}
