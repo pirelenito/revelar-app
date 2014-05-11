@@ -17,7 +17,7 @@ function Renderer (slidesFolder, targetFile) {
 
 Renderer.prototype = {
   render: function () {
-    return loadConfig()
+    return loadConfig.call(this)
               .then(loadTemplate.bind(this))
               .then(loadSlidesFiles.bind(this))
               .then(renderSlides.bind(this));
@@ -31,7 +31,7 @@ function renderSlides () {
   var content = that._template({
     revealRoot: that._revealRootPath,
     appRoot: that._appRoot,
-    config: { theme: 'default' },
+    config: that._config,
     slides: that._slidesFiles
   });
 
@@ -67,10 +67,10 @@ function loadSlidesFiles () {
 }
 
 
-function loadConfig (configPath) {
+function loadConfig () {
   var that = this;
 
-  return denodeify(fs.readFile).call(fs, configPath).then(function (data) {
+  return denodeify(fs.readFile).call(fs, that._configPath).then(function (data) {
     return JSON.parse(data);
   }).then(null, function () {
     return {
