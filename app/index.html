@@ -58,29 +58,19 @@
     </div>
 
     <script>
-      var tmp = require('tmp'),
-          path = require('path'),
-          Renderer = require('./lib/renderer'),
+      var Presentation = require('./lib/presentation'),
           slidesFolder = '/Users/paulo/Dropbox/palestrando/react';
 
+      var presentation = new Presentation(slidesFolder);
 
-      var tmpFileTemplate = path.join(slidesFolder, '/.revelar-slides-XXXXXX-.html');
-
-
-      tmp.file({ template: tmpFileTemplate }, function (err, tempFile) {
-        console.log("File: ", tempFile);
-
-        document.getElementById('presentation').src = 'file://' + tempFile;
-
-        var renderer = new Renderer('/Users/paulo/Dropbox/palestrando/react', tempFile);
-
-        setTimeout(function () {
-          renderer.render().then(function () {
-            document.getElementById('presentation').contentWindow.location.reload();
-          });
-        }, 100);
+      presentation.open().then(function (targetFile) {
+        document.getElementById('presentation').src = 'file://' + targetFile;
+        return presentation.render();
       });
 
+      presentation.onChange = function () {
+        document.getElementById('presentation').contentWindow.location.reload();
+      };
     </script>
 
     <script>
