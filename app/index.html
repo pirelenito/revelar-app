@@ -48,9 +48,7 @@
     </style>
 
     <div id="controls">
-      <h1>This will be the menu</h1>
-      <button>Open</button>
-      <button>Start presentation</button>
+      <input id="open-presentation" type="file" webkitdirectory />
     </div>
 
     <div id="presentation-container">
@@ -59,25 +57,35 @@
 
     <script>
       var Presentation = require('./lib/presentation'),
-          slidesFolder = '/Users/paulo/Dropbox/palestrando/react';
+          presentation = null;
 
-      var presentation = new Presentation(slidesFolder);
+      var chooser = document.querySelector('#open-presentation');
+      chooser.addEventListener("change", function() {
+        if (presentation) {
+          console.log('closing previous presentation');
+          presentation.close();
+        }
+
+        var slidesFolder = this.value;
+
+        presentation = new Presentation(slidesFolder);
+
+        presentation.open().then(function (targetFile) {
+          document.getElementById('presentation').src = 'file://' + targetFile;
+          return presentation.render();
+        }).then(refresh);
 
 
-      presentation.open().then(function (targetFile) {
-        document.getElementById('presentation').src = 'file://' + targetFile;
-        return presentation.render();
-      }).then(refresh);
+        function refresh () {
+          setTimeout(function () {
+            document.getElementById('presentation').contentWindow.location.reload();
+          }, 10);
+        }
+
+        presentation.onChange = refresh;
+      }, false);
 
 
-      function refresh () {
-        setTimeout(function () {
-          document.getElementById('presentation').contentWindow.location.reload();
-        }, 10);
-      }
-
-
-      presentation.onChange = refresh;
 
     </script>
 

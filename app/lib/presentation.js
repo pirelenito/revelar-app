@@ -43,7 +43,7 @@ function createTempFile () {
 
 
 function createRenderer () {
-  this._renderer = new Renderer('/Users/paulo/Dropbox/palestrando/react', this._renderingTarget);
+  this._renderer = new Renderer(this._folder, this._renderingTarget);
 }
 
 
