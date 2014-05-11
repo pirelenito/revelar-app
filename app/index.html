@@ -63,14 +63,22 @@
 
       var presentation = new Presentation(slidesFolder);
 
+
       presentation.open().then(function (targetFile) {
         document.getElementById('presentation').src = 'file://' + targetFile;
         return presentation.render();
-      });
+      }).then(refresh);
 
-      presentation.onChange = function () {
-        document.getElementById('presentation').contentWindow.location.reload();
-      };
+
+      function refresh () {
+        setTimeout(function () {
+          document.getElementById('presentation').contentWindow.location.reload();
+        }, 10);
+      }
+
+
+      presentation.onChange = refresh;
+
     </script>
 
     <script>
