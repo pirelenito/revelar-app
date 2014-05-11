@@ -1,7 +1,6 @@
 <!-- <!DOCTYPE html> -->
 <html>
   <head>
-    <script src="node_modules/jquery/dist/jquery.js"></script>
     <title>Revelar</title>
   </head>
   <body>
@@ -11,25 +10,87 @@
     <p class="path"></p>
     <button class="open-browser">Open presentation</button>
 
+    <style>
+      html {
+       overflow: auto;
+      }
+
+      html, body {
+       margin: 0px;
+       padding: 0px;
+       height: 100%;
+      }
+
+      #presentation-container {
+        position: absolute;
+        top: 40px;
+        right: 0;
+        left: 0;
+        bottom: 0;
+      }
+
+      #presentation {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+
+    <div id="presentation-container">
+      <iframe id="presentation" src="_slides.html" frameborder="0"></iframe>
+    </div>
+
     <script>
-      var revelar = require('revelar'),
-          gui = require('nw.gui');
+      var ejs = require('ejs'),
+          fs = require('fs'),
+          path = require('path'),
+          __dirname = window.location.pathname.replace('index.html', '');
 
-      revelar.listen(8000);
 
-      $(function () {
-        $('.open-browser').on('click', function () {
-          gui.Shell.openExternal('http://localhost:8000');
+      setInterval(function () {
+        fs.readFile(path.join(__dirname, 'templates/reveal-js-index.ejs'), { encoding: 'utf8' }, function (err, content) {
+          var template = ejs.render(content, {
+            rootFolder: path.join(__dirname, 'node_modules/reveal.js/'),
+            config: { theme: 'default' },
+            slides: ['/Users/paulo/Dropbox/palestrando/react/01-introduction.md']
+          });
+
+          fs.writeFile(path.join(__dirname, '_slides.html'), template, { encoding: 'utf8' }, function () {
+            document.getElementById('presentation').contentWindow.location.reload();
+            // document.getElementById('presentation').src = document.getElementById('presentation').src
+          });
         });
+      }, 5000);
 
-        $('#choose-slides').on('change', function () {
-          var directory = this.value;
-          $('.path').html(directory);
 
-          revelar.set('slidesPath', directory);
-        });
-      });
 
+      // var revelar = require('revelar'),
+      //     gui = require('nw.gui');
+
+      // revelar.listen(8000);
+
+      // $(function () {
+      //   $('.open-browser').on('click', function () {
+      //     gui.Shell.openExternal('http://localhost:8000');
+      //   });
+
+      //   $('#choose-slides').on('change', function () {
+      //     var directory = this.value;
+      //     $('.path').html(directory);
+
+      //     revelar.set('slidesPath', directory);
+      //   });
+      // });
+
+    </script>
+
+    <script>
+      // var fs = require('fs');
+
+      // fs.watch('./', function() {
+      //   if (location)
+      //     location.reload();
+      // });
     </script>
 
   </body>
