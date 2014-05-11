@@ -54,58 +54,32 @@
     </div>
 
     <div id="presentation-container">
-      <iframe nwdisable id="presentation" src="_slides.html" frameborder="0"></iframe>
+      <iframe nwdisable id="presentation" src="/var/folders/qj/6q6pmttx35n7lrlvxplss6lh0000gn/T/tmp-11291n3bhrm8.tmp" frameborder="0"></iframe>
     </div>
 
     <script>
-      var ejs = require('ejs'),
-          tmp = require('tmp'),
-          fs = require('fs'),
+      var tmp = require('tmp'),
           path = require('path'),
-          __dirname = window.location.pathname.replace('index.html', '');
+          Renderer = require('./lib/renderer'),
+          slidesFolder = '/Users/paulo/Dropbox/palestrando/react';
 
 
-      tmp.file(function _tempFileCreated(err, tempFile, fd) {
+      var tmpFileTemplate = path.join(slidesFolder, '/.revelar-slides-XXXXXX-.html');
+
+
+      tmp.file({ template: tmpFileTemplate }, function (err, tempFile) {
         console.log("File: ", tempFile);
 
         document.getElementById('presentation').src = 'file://' + tempFile;
 
-        setInterval(function () {
-          fs.readFile(path.join(__dirname, 'templates/reveal-js-index.ejs'), { encoding: 'utf8' }, function (err, content) {
-            var template = ejs.render(content, {
-              revealRoot: path.join(__dirname, 'node_modules/reveal.js/'),
-              appRoot: __dirname,
-              config: { theme: 'default' },
-              slides: ['/Users/paulo/Dropbox/palestrando/react/01-introduction.md']
-            });
+        var renderer = new Renderer('/Users/paulo/Dropbox/palestrando/react', tempFile);
 
-            fs.writeFile(tempFile, template, { encoding: 'utf8' }, function () {
-              document.getElementById('presentation').contentWindow.location.reload();
-            });
+        setTimeout(function () {
+          renderer.render().then(function () {
+            document.getElementById('presentation').contentWindow.location.reload();
           });
-        }, 5000);
+        }, 100);
       });
-
-
-
-
-      // var revelar = require('revelar'),
-      //     gui = require('nw.gui');
-
-      // revelar.listen(8000);
-
-      // $(function () {
-      //   $('.open-browser').on('click', function () {
-      //     gui.Shell.openExternal('http://localhost:8000');
-      //   });
-
-      //   $('#choose-slides').on('change', function () {
-      //     var directory = this.value;
-      //     $('.path').html(directory);
-
-      //     revelar.set('slidesPath', directory);
-      //   });
-      // });
 
     </script>
 

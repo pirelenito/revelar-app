@@ -28,7 +28,7 @@
       <div class="slides">
 
         <% slides.forEach(function (slide) { %>
-          <section data-markdown="<%= slide %>" data-separator="^\-\*\*" data-vertical="^\-\-"></section>
+          <section data-markdown="file://<%= slide %>" data-separator="^\-\*\*" data-vertical="^\-\-"></section>
         <% }) %>
 
       </div>
