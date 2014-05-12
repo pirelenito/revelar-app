@@ -56,36 +56,21 @@
     </div>
 
     <script>
-      var Presentation = require('./lib/presentation'),
-          presentation = null;
+
+      var Application = require('./lib/application');
+
+      var application = new Application({
+        presentationContainer: document.getElementById('presentation')
+      });
+
 
       var chooser = document.querySelector('#open-presentation');
       chooser.addEventListener("change", function() {
-        if (presentation) {
-          console.log('closing previous presentation');
-          presentation.close();
-        }
 
         var slidesFolder = this.value;
+        application.openPresentation(slidesFolder);
 
-        presentation = new Presentation(slidesFolder);
-
-        presentation.open().then(function (targetFile) {
-          document.getElementById('presentation').src = 'file://' + targetFile;
-          return presentation.render();
-        }).then(refresh);
-
-
-        function refresh () {
-          setTimeout(function () {
-            document.getElementById('presentation').contentWindow.location.reload();
-          }, 10);
-        }
-
-        presentation.onChange = refresh;
       }, false);
-
-
 
     </script>
 
