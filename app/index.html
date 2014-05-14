@@ -4,12 +4,6 @@
     <title>Revelar</title>
   </head>
   <body>
-    <h1>Revelar App</h1>
-
-    <input id="choose-slides" type="file" webkitdirectory/>
-    <p class="path"></p>
-    <button class="open-browser">Open presentation</button>
-
     <style>
       html {
        overflow: auto;
@@ -19,6 +13,8 @@
        margin: 0px;
        padding: 0px;
        height: 100%;
+       font-family: "Helvetica Neue", sans-serif;
+       font-weight: lighter;
       }
 
       #presentation-container {
@@ -29,6 +25,29 @@
         bottom: 0;
       }
 
+      label {
+        cursor: pointer;
+      }
+
+      #open-presentation {
+        display: none;
+      }
+
+      #open-presentation-label {
+        display: inline-block;
+        color: white;
+      }
+
+      #open-presentation-label:before {
+        content: '';
+        background: url(icons/folder.svg) no-repeat;
+        background-size: 18px 18px;
+        display: inline-block;
+        width: 18px;
+        height: 18px;
+        margin-right: 9px;
+      }
+
       #presentation {
         display: block;
         width: 100%;
@@ -36,18 +55,23 @@
       }
 
       #controls {
-        background: red;
+        padding: 0.5em;
+        background: rgb(26, 188, 156);
         position: absolute;
         top: 0;
         right: 0;
         left: 0;
-        height: 300px;
-        opacity: 0.5;
         z-index: 1;
+        opacity: 0.4;
+      }
+
+      #controls:hover {
+        opacity: 1;
       }
     </style>
 
     <div id="controls">
+      <label id="open-presentation-label" for="open-presentation">Open folder</label>
       <input id="open-presentation" type="file" webkitdirectory />
     </div>
 
@@ -72,15 +96,6 @@
 
       }, false);
 
-    </script>
-
-    <script>
-      // var fs = require('fs');
-
-      // fs.watch('./', function() {
-      //   if (location)
-      //     location.reload();
-      // });
     </script>
 
   </body>
