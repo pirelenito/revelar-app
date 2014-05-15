@@ -1,9 +1,12 @@
-var Presentation = require('./presentation');
+var path = require('path'),
+    Presentation = require('./presentation');
 
 
 function Application (options) {
   this._presentationContainer = options.presentationContainer;
   this._presentation = null;
+
+  this.openPresentation(path.join(__dirname, '../getting-started'));
 }
 
 
@@ -29,7 +32,7 @@ function firstRender (targetFile) {
 function refresh () {
   setTimeout(function () {
     this._presentationContainer.contentWindow.location.reload();
-  }.bind(this), 10);
+  }.bind(this), 100);
 }
 
 
