@@ -17,3 +17,8 @@ During development to update the built application:
 ```
 
 Then execute the `node-webkit.app`.
+
+
+## Icons
+
+Application icons from https://useiconic.com/open/
