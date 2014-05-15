@@ -74,7 +74,7 @@ function loadConfig () {
     return JSON.parse(data);
   }).then(null, function () {
     return {
-      theme: 'default'
+      theme: 'night'
     };
   }).then(function (config) {
     that._config = config;
