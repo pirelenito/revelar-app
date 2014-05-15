@@ -11,13 +11,13 @@
   },
   "window": {
     "title": "Revelar",
-    "icon": "link.png",
-    "toolbar": true,
+    "icon": "revelar-icon.png",
+    "toolbar": false,
     "frame": true,
     "width": 800,
     "height": 600,
     "position": "mouse",
-    "min_width": 400,
-    "min_height": 400
+    "min_width": 800,
+    "min_height": 600
   }
 }
