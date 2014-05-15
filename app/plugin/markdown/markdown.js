@@ -247,7 +247,7 @@
 					xhr.send();
 				}
 				catch ( e ) {
-					alert( 'Failed to get the Markdown file ' + url + '. Make sure that the presentation and the file are served by a HTTP server and the file can be found there. ' + e );
+					// alert( 'Failed to get the Markdown file ' + url + '. Make sure that the presentation and the file are served by a HTTP server and the file can be found there. ' + e );
 				}
 
 			}
